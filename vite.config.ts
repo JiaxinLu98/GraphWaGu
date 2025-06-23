@@ -1,10 +1,9 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
 import glsl from 'vite-plugin-glsl';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig(({ mode }) => {
-  const commonPlugins = [react(), glsl()];
+  const commonPlugins = [glsl()];
   const base = '/GraphWaGu/';
 
   if (!mode || mode === 'html') {

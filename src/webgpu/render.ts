@@ -560,11 +560,9 @@ export class Renderer {
   }
 
   async runForceDirected() {
-    // this.forceDirected!.runForces(
-    //   this.nodeDataBuffer!, this.edgeDataBuffer!, this.mortonCodeBuffer!, this.nodeLength, this.edgeLength,
-    //   this.coolingFactor, this.idealLength, this.energy, this.theta, this.iterationCount, 100,
-    //   this.sourceEdgeDataBuffer, this.targetEdgeDataBuffer, this.frame!
-    // );
+    this.forceDirected!.runForces(
+      this.coolingFactor, this.idealLength, this.theta, this.iterationCount
+    );
   }
 
   async stopForceDirected() {

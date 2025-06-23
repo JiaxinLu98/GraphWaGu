@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
       build: {
         lib: {
           name: 'GraphWaGuRenderer',
-          entry: 'src/webgpu/render.ts',
+          entry: 'src/index.ts',
           formats: ['es'],
           fileName: 'graphwagu-renderer',
         },

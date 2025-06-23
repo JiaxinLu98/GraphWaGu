@@ -29,13 +29,13 @@ export class Renderer {
   public canvasSize: [number, number] | null = null;
   public idealLength: number = 0.005;
   public coolingFactor: number = 0.985;
-  public iterRef: React.RefObject<HTMLLabelElement>;
+  public label: HTMLLabelElement;
   public frame: (() => void) | undefined;
   public edgeList: Array<number> = [];
   public mortonCodeBuffer: GPUBuffer | null = null;
   public energy: number = 0.1;
   public theta: number = 2;
-  canvasRef: any;
+  public canvas: HTMLCanvasElement;
   viewExtreme: [number, number, number, number];
   iterationCount: number = 1000;
   context: GPUCanvasContext | null = null;
@@ -44,27 +44,29 @@ export class Renderer {
 
   constructor(
     device: GPUDevice,
-    canvasRef: React.RefObject<HTMLCanvasElement>,
-    iterRef: React.RefObject<HTMLLabelElement>,
+    canvas: HTMLCanvasElement,
+    label: HTMLLabelElement,
   ) {
-    this.iterRef = iterRef;
     this.device = device;
-    this.canvasRef = canvasRef;
+    this.label = label;
+    this.canvas = canvas;
     this.viewExtreme = [-1, -1, 2, 2];
     // Check that canvas is active
-    if (canvasRef.current === null) return;
-    this.context = canvasRef.current.getContext('webgpu')!;
+    if(!this.canvas.getContext('webgpu')) {
+      throw new Error("WebGPU is not supported or canvas context failed");
+    }
+    this.context = this.canvas.getContext('webgpu')!;
 
     const devicePixelRatio = window.devicePixelRatio || 1;
     
-    canvasRef.current.width = 800 * devicePixelRatio;
-    canvasRef.current.height = 800 * devicePixelRatio;
-    // canvasRef.current.width = 3840;
-    // canvasRef.current.height = 2160;
+    this.canvas.width = 800 * devicePixelRatio;
+    this.canvas.height = 800 * devicePixelRatio;
+    // this.canvas.width = 3840;
+    // this.canvas.height = 2160;
     const presentationFormat: GPUTextureFormat = 'rgba8unorm';
     this.canvasSize = [
-      canvasRef.current.width,
-      canvasRef.current.height
+      this.canvas.width,
+      this.canvas.height
     ];
 
     this.context.configure({
@@ -248,7 +250,7 @@ export class Renderer {
 
 
     const texture = device.createTexture({
-      size: [canvasRef.current.width, canvasRef.current.height],
+      size: [this.canvas.width, this.canvas.height],
       sampleCount: 4,
       format: presentationFormat,
       usage: GPUTextureUsage.RENDER_ATTACHMENT,
@@ -258,7 +260,7 @@ export class Renderer {
     this.frame = async () => {
       // const start = performance.now();
       // Sample is no longer the active page.
-      if (!canvasRef.current) return;
+      if (!this.canvas) return;
 
       const renderPassDescriptor: GPURenderPassDescriptor = {
         colorAttachments: [
@@ -313,11 +315,11 @@ export class Renderer {
   }
 
   async takeScreenshot() {
-    if (!this.canvasRef.current) return;
+    if (!this.canvas) return;
 
     // Get dimensions
-    const width = this.canvasRef.current.width;
-    const height = this.canvasRef.current.height;
+    const width = this.canvas.width;
+    const height = this.canvas.height;
     const bytesPerPixel = 4; // RGBA
     const bufferSize = width * height * bytesPerPixel;
 
@@ -603,7 +605,7 @@ export class Renderer {
         newTranslation = translation;
       }
     };
-    controller.registerForCanvas(this.canvasRef.current!);
+    controller.registerForCanvas(this.canvas);
   }
 }
 

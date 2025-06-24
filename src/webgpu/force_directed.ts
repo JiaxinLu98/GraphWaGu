@@ -242,9 +242,19 @@ export class ForceDirected {
     }
 
     async runForces(
-        coolingFactor = this.coolingFactor, l = this.l,
+        nodeDataBuffer: GPUBuffer = this.nodeDataBuffer!, edgeDataBuffer: GPUBuffer = this.edgeDataBuffer!,
+        mortonCodeBuffer: GPUBuffer = this.mortonCodeBuffer!, nodeLength: number = this.nodeLength,
+        edgeLength: number = this.edgeLength, 
+        coolingFactor = this.coolingFactor, l = this.l, 
         theta: number = this.theta, iterationCount = this.iterationCount
     ) {
+        this.nodeDataBuffer = nodeDataBuffer;
+        this.edgeDataBuffer = edgeDataBuffer;
+        this.mortonCodeBuffer = mortonCodeBuffer;
+        this.nodeLength = nodeLength;
+        this.edgeLength = edgeLength;
+        console.log("ForceDirected running...");
+        console.log("Buffer used inside force simulation:", this.nodeDataBuffer);
         this.stopForce = false;
         if (this.nodeLength === 0 || this.edgeLength === 0 || this.nodeDataBuffer === null || this.edgeDataBuffer === null) {
             console.log("No data to run");

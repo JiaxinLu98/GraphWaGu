@@ -460,6 +460,10 @@ export class Renderer {
     });
     new Float32Array(this.nodeDataBuffer.getMappedRange()).set(nodeData);
     this.nodeDataBuffer.unmap();
+
+    // debug
+    console.log("Renderer - nodeDataBuffer:", this.nodeDataBuffer);
+
     this.mortonCodeBuffer = this.device.createBuffer({
       size: nodeData.length,
       usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC,
@@ -561,8 +565,10 @@ export class Renderer {
 
   async runForceDirected() {
     console.log("Running force-directed layout...");
-    this.forceDirected!.runForces(
-      this.coolingFactor, this.idealLength, this.theta, this.iterationCount
+    console.log("Renderer - nodeDataBuffer:", this.nodeDataBuffer);
+    this.forceDirected!.runForces(this.nodeDataBuffer!, this.edgeDataBuffer!, 
+      this.mortonCodeBuffer!, this.nodeLength, this.edgeLength,
+      this.coolingFactor, this.idealLength, this.theta, this.iterationCount,
     );
     requestAnimationFrame(this.frame!);
   }

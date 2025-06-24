@@ -564,11 +564,11 @@ export class Renderer {
   }
 
   async runForceDirected() {
-    console.log("Running force-directed layout...");
-    console.log("Renderer - nodeDataBuffer:", this.nodeDataBuffer);
-    this.forceDirected!.runForces(this.nodeDataBuffer!, this.edgeDataBuffer!, 
-      this.mortonCodeBuffer!, this.nodeLength, this.edgeLength,
+    this.forceDirected!.runForces(
+      this.nodeDataBuffer!, this.edgeDataBuffer!, this.mortonCodeBuffer!,
+      this.nodeLength, this.edgeLength,
       this.coolingFactor, this.idealLength, this.theta, this.iterationCount,
+      this.sourceEdgeDataBuffer!, this.targetEdgeDataBuffer!
     );
     requestAnimationFrame(this.frame!);
   }

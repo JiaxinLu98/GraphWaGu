@@ -242,17 +242,24 @@ export class ForceDirected {
     }
 
     async runForces(
-        nodeDataBuffer: GPUBuffer = this.nodeDataBuffer!, edgeDataBuffer: GPUBuffer = this.edgeDataBuffer!,
-        mortonCodeBuffer: GPUBuffer = this.mortonCodeBuffer!, nodeLength: number = this.nodeLength,
-        edgeLength: number = this.edgeLength, 
-        coolingFactor = this.coolingFactor, l = this.l, 
-        theta: number = this.theta, iterationCount = this.iterationCount
+        nodeDataBuffer: GPUBuffer, edgeDataBuffer: GPUBuffer, mortonCodeBuffer: GPUBuffer,
+        nodeLength: number, edgeLength: number, 
+        coolingFactor: number, l: number, 
+        theta: number, iterationCount: number,
+        sourceEdgeDataBuffer: GPUBuffer, targetEdgeDataBuffer: GPUBuffer
     ) {
         this.nodeDataBuffer = nodeDataBuffer;
         this.edgeDataBuffer = edgeDataBuffer;
         this.mortonCodeBuffer = mortonCodeBuffer;
         this.nodeLength = nodeLength;
         this.edgeLength = edgeLength;
+        this.l = l;
+        this.theta = theta;
+        this.coolingFactor = coolingFactor;
+        this.iterationCount = iterationCount;
+        this.sourceEdgeDataBuffer = sourceEdgeDataBuffer;
+        this.targetEdgeDataBuffer = targetEdgeDataBuffer;
+
         console.log("ForceDirected running...");
         console.log("Buffer used inside force simulation:", this.nodeDataBuffer);
         this.stopForce = false;
@@ -260,10 +267,6 @@ export class ForceDirected {
             console.log("No data to run");
             return;
         }
-        this.l = l;
-        this.theta = theta;
-        this.coolingFactor = coolingFactor;
-        this.iterationCount = iterationCount;
         const rangeBuffer = this.device.createBuffer({
             size: 4 * 4,
             usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC | GPUBufferUsage.COPY_DST,

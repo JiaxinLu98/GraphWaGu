@@ -560,9 +560,11 @@ export class Renderer {
   }
 
   async runForceDirected() {
+    console.log("Running force-directed layout...");
     this.forceDirected!.runForces(
       this.coolingFactor, this.idealLength, this.theta, this.iterationCount
     );
+    requestAnimationFrame(this.frame!);
   }
 
   async stopForceDirected() {

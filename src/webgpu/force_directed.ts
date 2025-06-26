@@ -919,7 +919,7 @@ export class ForceDirected {
             // if (output[11] > 0) {
             //     break;
             // }
-            this.coolingFactor = this.coolingFactor * 0.975;
+            this.coolingFactor = this.coolingFactor * coolingFactor;
             if (debug) {await this.device.queue.onSubmittedWorkDone();}
             requestAnimationFrame(frame);
             const frameEnd = performance.now();

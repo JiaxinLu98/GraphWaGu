@@ -246,7 +246,8 @@ export class ForceDirected {
         nodeLength: number, edgeLength: number, 
         coolingFactor: number, l: number, 
         theta: number, iterationCount: number,
-        sourceEdgeDataBuffer: GPUBuffer, targetEdgeDataBuffer: GPUBuffer
+        sourceEdgeDataBuffer: GPUBuffer, targetEdgeDataBuffer: GPUBuffer,
+        frame: () => void
     ) {
         this.nodeDataBuffer = nodeDataBuffer;
         this.edgeDataBuffer = edgeDataBuffer;
@@ -920,6 +921,7 @@ export class ForceDirected {
             // }
             this.coolingFactor = this.coolingFactor * 0.975;
             if (debug) {await this.device.queue.onSubmittedWorkDone();}
+            requestAnimationFrame(frame);
             const frameEnd = performance.now();
             console.log(`Total frame time: ${frameEnd - frameStart}`);
             totalTime += frameEnd - frameStart;

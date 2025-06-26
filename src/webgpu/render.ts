@@ -568,9 +568,9 @@ export class Renderer {
       this.nodeDataBuffer!, this.edgeDataBuffer!, this.mortonCodeBuffer!,
       this.nodeLength, this.edgeLength,
       this.coolingFactor, this.idealLength, this.theta, this.iterationCount,
-      this.sourceEdgeDataBuffer!, this.targetEdgeDataBuffer!
+      this.sourceEdgeDataBuffer!, this.targetEdgeDataBuffer!,
+      this.frame!
     );
-    requestAnimationFrame(this.frame!);
   }
 
   async stopForceDirected() {

@@ -567,7 +567,7 @@ export class Renderer {
     this.forceDirected!.runForces(
       this.nodeDataBuffer!, this.edgeDataBuffer!, this.mortonCodeBuffer!,
       this.nodeLength, this.edgeLength,
-      this.coolingFactor, this.idealLength, this.theta, this.iterationCount,
+      this.coolingFactor, this.idealLength, this.energy, this.theta, this.iterationCount, 100,
       this.sourceEdgeDataBuffer!, this.targetEdgeDataBuffer!,
       this.frame!
     );

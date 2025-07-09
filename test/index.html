@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <style>
+        canvas {
+            background-color: #f0f8ff;
+            max-width: 800px;
+            aspect-ratio: 1;
+        }
+        .controls {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            margin-bottom: 15px;
+        }
+        .control-label {
+            margin-bottom: 0;
+            font-weight: bold;
+        }
+      </style>
+  </head>
+
+  <body>
+    <div id="no-webgpu" style="display:none; color: red;">WebGPU not supported</div>
+    <button id="startBtn">Start Layout</button>
+    <button id="stopBtn">Stop Layout</button>
+    <canvas id="webgpu-canvas" width="400" height="400"></canvas>
+  </body>
+
+</html>
